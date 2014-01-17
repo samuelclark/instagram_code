@@ -1,10 +1,10 @@
 from instagram.client import InstagramAPI
 from pattern.vector import count as vec_count
-CLIENT_SECRET = '04e72f5e767147bbb4da6168c3495270'
-CLIENT_ID = 'e8bddc5ef0e5460cbc5c05a8945c282f'
-REDIRECT_URL = 'http://127.0.0.1:5000/login'
-ACCESS_TOKEN = '194916491.e8bddc5.f6a363bb1db74f808cf0e55c6dca9e53'
-USER_ID = '194916491'
+CLIENT_SECRET = ''
+CLIENT_ID = ''
+REDIRECT_URL = ''
+ACCESS_TOKEN = ''
+USER_ID = ''
 api = InstagramAPI(access_token=ACCESS_TOKEN)
 
 
@@ -24,7 +24,6 @@ def build_tag_index(recent_media):
 
     nodes = {}
     edges = {}
-
     for media in recent_media[:10]:
         try:
             tags = media.tags
@@ -45,13 +44,14 @@ def build_tag_index(recent_media):
     for name, tags in edges.items():
         edge_freq = vec_count(tags)
         edges[name] = edge_freq
-
     return {'nodes': nodes, 'edges': edges}
 
+if __name__ == '__main__':
+# test code for nodes, edges
+    tag = 'happy'
+    rm = tag_recent_media(tag)
 
-tag = 'happy'
-rm = tag_recent_media(tag)
+    index = build_tag_index(rm)
+    nodes = index['nodes']
+    edges = index['edges']
 
-index = build_tag_index(rm)
-nodes = index['nodes']
-edges = index['edges']
