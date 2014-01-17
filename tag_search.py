@@ -27,6 +27,9 @@ class TagSearch:
         self.num_runs = 0
 
     def get_save_path(self, save_dir='tag_pickles'):
+        """
+            returns path to save files
+        """
         save_dir = os.path.join(save_dir, self.tag)
         date_str = "{0}_{1}.pkl".format(
             self.tag,
@@ -41,13 +44,14 @@ class TagSearch:
         self.tag = tag
 
     def load_saved_media(self):
+        """
+            loads media from save path
+        """
         if os.path.exists(self.save_path):
             with open(self.save_path, 'rb') as save_file:
                 saved_media = cPickle.load(save_file)
         else:
             saved_media = {}
-        # print "{1} : saved_media = {0}\t time: {2}
-        # seconds".format(len(saved_media),self.save_path,(e-s).seconds)
         return saved_media
 
     def __str__(self):
@@ -65,12 +69,17 @@ class TagSearch:
         return search_results
 
     def tag_recent_media(self, count=50):
+        """
+            returns tag_recent_media for tag_name = <tag>
+        """
         sresults = self.api.tag_recent_media(count=count, tag_name=self.tag)
         self.api_calls += 1
-        print sresults[0]
         return sresults[0]
 
     def save_recent_media(self):
+        """
+            saves recent media fo self.save_path
+        """
         num_duplicates = 0
         num_saved = 0
         for each in self.tag_recent_media():
@@ -94,6 +103,19 @@ class TagSearch:
         self.num_runs += 1
 
 
+"""
+    The following logic is run persistently to collect and store objects with tags <tags>
+    Over 1 million, 2.6 gb saved so far.
+    usage:
+        # start screen
+        screen
+        python tag_search.py
+        ctrl + A --> ctrl  + D
+
+        # reconnect
+        screen -ls 
+        screen -R t
+"""
 ts = TagSearch(access_token=ACCESS_TOKEN, tag='happy')
 tags = ['happy',
         'sad',
