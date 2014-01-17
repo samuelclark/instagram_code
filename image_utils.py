@@ -11,6 +11,9 @@ import loadpickle
 
 def save_media_image(media, tag, quality='standard_resolution',
                      save_dir='image_save'):
+    """
+        saves an image with url from instagram media object to file
+    """
     ext = ".png"
     img = media.images[quality]
     img_req = requests.get(img.url, stream=True)
@@ -28,7 +31,9 @@ def save_media_image(media, tag, quality='standard_resolution',
 
 
 def gen_random_images(tags):
-
+    """
+        helper function to get a set of random images from tag files
+    """
     for i in range(50):
         tag = random.choice(tags)
         print tag
