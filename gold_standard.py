@@ -1,9 +1,11 @@
 import os
-
 from pattern.vector import Corpus, Document, PORTER
 
 
 def get_gold_docidx(file_name):
+    """
+        extract gold standard from file_name
+    """
     doc_index = {}
     with open(file_name, 'rb') as gold_file:
 
@@ -17,7 +19,7 @@ def get_gold_docidx(file_name):
     return doc_index
 
 
-gs_file = 'twitter-gold.tsv'
-file_name = os.path.join('resources', gs_file)
-
-didx = get_gold_docidx(file_name)
+if __name__ == '__main__':
+    gs_file = 'twitter-gold.tsv'
+    file_name = os.path.join('resources', gs_file)
+    didx = get_gold_docidx(file_name)
