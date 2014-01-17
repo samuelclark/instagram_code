@@ -8,23 +8,10 @@ import classifier
 ########################################################################
 #bored_docs = create_tag_docs('bored')
 #fun_docs = create_tag_docs('fun')
+
 """
-num=5
-for count in range(1,num):
-	pnc = create_posneg_classifier(count=count)
-	pnc.nb_train()
-	r = pnc.nb_test(gold_standard=didx.values())
-	print count,'\t',r
-
-
-print "\n" * 3
-for count in range(1,num):
-	tlc = create_taglist_classifier(all_tags,count=count)
-	tlc.nb_train()
-	r = tlc.nb_test()
-	print count,"\t",r
+    execution logic of the program
 """
-
 
 try:
     source = sys.argv[1]
