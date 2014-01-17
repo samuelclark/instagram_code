@@ -36,7 +36,9 @@ def create_instagram_document_index(media_dict, tag, num, comments=True):
 
 def get_media_text(
         mobj, modifier=document_modifier.unigram_bigram_text_feature, comments=True):
-       # text = mobj.caption.text if mobj.caption else " "
+        """
+            combines the caption text of a media object with the comment text
+        """
         if mobj.caption:
             text = mobj.caption.text
         else:
