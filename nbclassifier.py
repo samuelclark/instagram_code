@@ -1,36 +1,40 @@
 import random
 import datetime
-from pattern.vector import Model,NB,Document,PORTER,TF,kfoldcv
+from pattern.vector import Model, NB, Document, PORTER, TF, kfoldcv
+
+
 class NBClassifier:
+
     """
         This class interfaces a pattern corpus with a pattern.vector nb classifier
 
     """
-    def __init__(self,corpus,**kargs):
+
+    def __init__(self, corpus, **kargs):
         """
             Initializes the NBClassifier class with a corpus and a NB instance
             (input): corpus = a corpus of pattern Documents constructed from Grams
         """
         self.corpus = corpus
         self.documents = self.corpus.documents
-        self.model = Model(documents=self.documents,weight='TF-IDF')
+        self.model = Model(documents=self.documents, weight='TF-IDF')
         #self.documents.words = self.documents.keywords
-        self.split_idx = len(self)/4
+        self.split_idx = len(self) / 4
         self.nb = NB()
-
 
     def __len__(self):
         return len(self.documents)
 
-
-    def classify_document(self,document):
+    def classify_document(self, document):
         """
             classify document with nb instance
             (input):
                  document = Document instance with same format as classifier train set
             (output): classification result
         """
-        return self.nb.classify(Document(document,stemmer=PORTER),discrete=True)
+        return (
+            self.nb.classify(Document(document, stemmer=PORTER), discrete=True)
+        )
 
     def nb_train(self):
         """
@@ -39,15 +43,14 @@ class NBClassifier:
             (outpu): trains self.nb
         """
         train_start = datetime.datetime.now()
-        print "training with {0} docs".format(len(self)-self.split_idx)
+        print "training with {0} docs".format(len(self) - self.split_idx)
         documents = self.documents[:-self.split_idx]
         random.shuffle(documents)
         [self.nb.train(doc) for doc in documents]
         train_end = datetime.datetime.now()
-        print "training {0} docs took {1} seconds".format(len(documents),(train_end-train_start).seconds)
+        print "training {0} docs took {1} seconds".format(len(documents), (train_end - train_start).seconds)
 
-
-    def nb_test(self,gold_standard=None):
+    def nb_test(self, gold_standard=None):
         """
             Evaluates the classifier on (1/4) of the documents
             (input): None
@@ -73,11 +76,14 @@ class NBClassifier:
         """
 
         distribution = self.nb.distribution
-        rankdistribution = sorted(distribution,key = lambda x: distribution[x],reverse=True)
-        for each,key in enumerate(rankdistribution[:10]):
-            print "{0}:\t{1} ({2})".format(each,key,distribution[key])
+        rankdistribution = sorted(
+            distribution,
+            key=lambda x: distribution[x],
+            reverse=True)
+        for each, key in enumerate(rankdistribution[:10]):
+            print "{0}:\t{1} ({2})".format(each, key, distribution[key])
 
-        return distribution,rankdistribution
+        return distribution, rankdistribution
 
     def run(self):
         """
@@ -90,4 +96,3 @@ class NBClassifier:
         print "finalizing"
         self.nb.finalize()
         return result
-
