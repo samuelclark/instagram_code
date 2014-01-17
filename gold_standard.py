@@ -19,7 +19,6 @@ def get_gold_docidx(file_name):
     return doc_index
 
 
-if __name__ == '__main__':
-    gs_file = 'twitter-gold.tsv'
-    file_name = os.path.join('resources', gs_file)
-    didx = get_gold_docidx(file_name)
+gs_file = 'twitter-gold.tsv'
+file_name = os.path.join('resources', gs_file)
+didx = get_gold_docidx(file_name)
