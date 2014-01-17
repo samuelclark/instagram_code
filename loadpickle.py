@@ -46,6 +46,9 @@ def get_files_from_path(fname, save_dir='tag_pickles'):
 
 
 def get_all_tagpickles(tag, count=False, save_dir='tag_pickles',):
+    """
+        loads all the pickle files for a given tag and combines them into a {<key>:<tag>} dictionary
+    """
     t_dict = {}
     flist = get_files_from_path(tag, save_dir=save_dir)
     if count:
