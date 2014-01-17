@@ -76,15 +76,6 @@ def save_user_list(user_id, user_list, dir_name='user_pickles'):
         print "saving user_list with {0} users to {1}".format(len(user_list), outfile)
         cPickle.dump(user_list, of)
 
-
 s_list = [0, 20, 40]
 usr_list = recursive_user_follows_index(api, USER_ID, [], s_list[0])
 save_user_list(USER_ID, usr_list)
-
-
-
-
-
-
-
-#ud = build_user_follows_index(api, USER_ID)
