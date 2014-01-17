@@ -6,6 +6,9 @@ import datetime
 
 
 def create_doc_idx(tag_list, mode='instagram'):
+    """
+        turns a tag_list into an index of pattern documents
+    """
     doc_idx = {}
     for tag in tag_list:
         tag_docs = create_tag_docs(tag)
@@ -14,6 +17,9 @@ def create_doc_idx(tag_list, mode='instagram'):
 
 
 def create_tag_docs(tag, label=None, count=None, mode='instagram'):
+    """
+        loads tags from file and turns them into documents
+    """
     if not label:
         label = tag
     if mode == 'instagram':
@@ -26,6 +32,9 @@ def create_tag_docs(tag, label=None, count=None, mode='instagram'):
 
 
 class Tag2Document:
+    """
+        This class handles the convesion of a instagram Media object to a pattern document
+    """
 
     def __init__(self, label, count, mode, max_documents=None):
 
@@ -47,6 +56,10 @@ class Tag2Document:
         )
 
     def load_with_tag(self, tag):
+        """
+            creates tag documents for  <tag>
+            contains timing logic for optimization
+        """
         self.tag = tag
         print "loading documents with tag = {0}".format(self.tag)
         loadp_start = datetime.datetime.now()
@@ -67,6 +80,9 @@ class Tag2Document:
         print "loaded {0} documents from media in {1} seconds with a rate of {2} documents/seconds".format(num_docs, duration, float(num_docs) / float(duration))
 
     def create_tag_media(self):
+        """
+            loads all the tag/media files for <self.tag>
+        """
         print "creating_tag_media\t{0}".format(self)
         self.tag_media = loadpickle.get_all_tagpickles(
             self.tag,
@@ -76,6 +92,9 @@ class Tag2Document:
             self.max_documents = len(self.tag_media)
 
     def create_tag_docs(self):
+        """
+            uses tweet2document and instagram2document to produce pattern.Document representations
+        """
         print "creating_tag_docs\t{0}".format(self)
 
         if self.mode == 'twitter':
