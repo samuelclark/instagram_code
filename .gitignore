@@ -1,0 +1,8 @@
+*.pyc
+*.idea
+image_save/
+tag_pickles/
+old_code/
+tweet_pickles/
+scans/
+build/
